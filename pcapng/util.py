@@ -56,10 +56,6 @@ def is_python3():
     (major, minor, micro, release_level, serial) = sys.version_info
     return ((major == 3) and (minor >= 5))
 
-def assert_python2():
-    "Assert running in Python 2, version 2.7 or later"
-    assert is_python2()
-
 #-----------------------------------------------------------------------------
 #todo need tests for all
 
@@ -111,7 +107,7 @@ def assert_uint8_list( listy ):
 
 def assert_vec4_uint8( listy ):
     "Assert the argument is a length 4 list of uint8 values"
-    print( '#140  type={}  len={}  value={} '.format( type(listy), len(listy), listy ))
+    print(( '#140  type={}  len={}  value={} '.format( type(listy), len(listy), listy )))
     assert len(listy) == 4
     assert_uint8_list( listy )
 
@@ -165,7 +161,7 @@ def fibonacci_range(limit):   #todo need test
 def fibonacci_range_signed(limit):   #todo need test
     "Returns a symmetric list of pos/neg Fibonacci numbers with abs(val) less than to limit"
     pos_vals = fibonacci_range(limit)
-    neg_vals = map( (lambda x: -x), fibonacci_range(limit) )
+    neg_vals = list(map( (lambda x: -x), fibonacci_range(limit) ))
     result = sorted( (pos_vals + neg_vals), key=(lambda x: abs(x)))
     return result
 
@@ -180,21 +176,25 @@ def assert_rel_equal( x, y, digits=None ):
     if (ratio < cmpr):
         assert True
     else:
-        print( 'assert_rel_equal(): x={}  y={}  digits={}  max_val={}  delta={}  ratio={}  cmpr={} '.format(
-            x, y, digits, max_val, delta, ratio, cmpr ))
+        print(( 'assert_rel_equal(): x={}  y={}  digits={}  max_val={}  delta={}  ratio={}  cmpr={} '.format(
+            x, y, digits, max_val, delta, ratio, cmpr )))
         assert False
 
 #todo ensure all have tests
 
 def to_bytes( arg ):
     """Converts arg to a 'bytes' object."""
-    return bytes( bytearray( arg ))    # if python2, 'bytes' is synonym for 'str'
+    if isinstance(arg, bytes):
+        return arg
+    if isinstance(arg, str):
+        return arg.encode('utf-8')
+    return bytes(arg)
 
 def str_to_bytes( arg ):
     """Converts a string arg to a 'bytes' object."""
     assert_type_str( arg )
     """Convert an ASCII string to 'bytes'. Works on both Python2 and Python3."""
-    return to_bytes( map(ord,arg))
+    return to_bytes( list(map(ord,arg)))
 
 def bytes_to_uint8_list( arg ):  #todo need test
     """Converts a 'bytes' arg to a list of uint8"""

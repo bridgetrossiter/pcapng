@@ -81,7 +81,7 @@ def test_block32_bytes_pack():
     assert_block32_bytes_packing( 'Doh!' )
     assert_block32_bytes_packing( 'How do you like me now?' )
     for i in range(23):
-        assert_block32_bytes_packing( range(i) )
+        assert_block32_bytes_packing( list(range(i)) )
 
 def test_block32_labelled_bytes_pack():
     block_label = util.curr_time_utc_secs()
@@ -100,7 +100,7 @@ def test_block32_labelled_bytes_pack():
     assert_block32_labelled_bytes_packing( 'Doh!' )
     assert_block32_labelled_bytes_packing( 'How do you like me now?' )
     for i in range(13):
-        assert_block32_labelled_bytes_packing( range(i) )
+        assert_block32_labelled_bytes_packing( list(range(i)) )
 
 #-----------------------------------------------------------------------------
 
@@ -241,10 +241,10 @@ def test_time():
     util.test_time_utc_unset()
 
 def test_quot():
-    assert [0,0,0, 1,1,1, 2,2,2] == map( lambda x:util.quot(x,3), range(9) )
+    assert [0,0,0, 1,1,1, 2,2,2] == [util.quot(x,3) for x in range(9)]
 
 def test_mod():
-    assert [0,1,2, 0,1,2, 0,1,2] == map( lambda x:util.mod(x,3), range(9) )
+    assert [0,1,2, 0,1,2, 0,1,2] == [util.mod(x,3) for x in range(9)]
 
 def test_take():
     def generate_ints(N):

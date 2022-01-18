@@ -28,7 +28,7 @@ import pcapng.util  as util
 from   pcapng.util  import to_bytes
 
 #-----------------------------------------------------------------------------
-util.assert_python2()    #todo make work for python 2.7 or 3.3 ?
+     #todo make work for python 2.7 or 3.3 ?
 #-----------------------------------------------------------------------------
 
 #todo add docstrings for all classes
@@ -122,11 +122,11 @@ class Comment(Option):
     def unpack( packed_bytes ):
         "Deserialize from packed bytes"
         (type_code, content_len) = struct.unpack('=HH', packed_bytes[:4])
-        print( '210 type_code={} content_len={}'.format(type_code, content_len))
+        print(( '210 type_code={} content_len={}'.format(type_code, content_len)))
         assert type_code == Comment.SPEC_CODE     #todo copy check to all
         content_pad = packed_bytes[4:]
         content = content_pad[:content_len]
-        print( '211 content_pad={} content={}'.format(content_pad, content))
+        print(( '211 content_pad={} content={}'.format(content_pad, content)))
         return Comment(content)
 
 #-----------------------------------------------------------------------------
@@ -157,7 +157,7 @@ class CustomStringCopyable(CustomOption):
         "Serialize into packed bytes"
         content_len     = len(self.content)
         spec_len        = content_len + 4   # spec definition of length includes PEN
-        print( '140 CSC.pack()    content={} content_len={} spec_len={} '.format( self.content, content_len, spec_len ))
+        print(( '140 CSC.pack()    content={} content_len={} spec_len={} '.format( self.content, content_len, spec_len )))
         content_pad     = util.block32_pad_bytes(self.content)
         packed_bytes    = struct.pack( '=HHL', self.type_code, spec_len, self.pen_val ) + content_pad
         return packed_bytes
@@ -172,7 +172,7 @@ class CustomStringCopyable(CustomOption):
         content_len     = spec_len - 4
         content_pad     = packed_bytes[8:]
         content         = content_pad[:content_len]
-        print( '140 CSC.unpack()  content={} content_len={} spec_len={} '.format( content, content_len, spec_len ))
+        print(( '140 CSC.unpack()  content={} content_len={} spec_len={} '.format( content, content_len, spec_len )))
         return CustomStringCopyable( pen_val, content )
 
 class CustomBinaryCopyable(CustomOption):
@@ -407,7 +407,7 @@ class IdbIpv4Addr(IdbOption):
         addr_val    = util.bytes_to_uint8_list( packed_bytes[4:8]  )
         netmask_val = util.bytes_to_uint8_list( packed_bytes[8:12] )
         result = IdbIpv4Addr( addr_val, netmask_val )
-        print( 'IdbIpv4Addr.unpack() - result=', result)
+        print(( 'IdbIpv4Addr.unpack() - result=', result))
         print( 'IdbIpv4Addr.unpack() - exit')
         return result
 
@@ -846,7 +846,7 @@ def pack_all(opts_lst):  #todo needs test
     #todo verify all fields
     """Given a list of options, converts each into packed bytes and concatenates the result"""
     util.assert_type_list(opts_lst)
-    cum_result = ''
+    cum_result = b''
     for opt in opts_lst:
         cum_result += opt.pack()
     cum_result += EndOfOptions.PACKED_BYTES
@@ -889,7 +889,7 @@ def unpack_dispatch( dispatch_tbl, packed_bytes ):
         return result
     else:
         #todo make generic OPT_UNKNOWN ?
-        print( 'warning - option.unpack_dispatch(): unrecognized Option={}'.format( type_code )) #todo log
+        print(( 'warning - option.unpack_dispatch(): unrecognized Option={}'.format( type_code ))) #todo log
         raise Exception( 'unpack_dispatch(): unrecognized option type_code={}'.format(type_code))
 
 def unpack_all(dispatch_table, options_bytes):

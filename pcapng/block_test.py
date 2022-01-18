@@ -34,8 +34,8 @@ def test_section_header_block():
     shb_obj_unpacked    = block.SectionHeaderBlock.unpack(idb_bytes)
     util.assert_type_bytes( idb_bytes )
     assert util.classname( shb_obj_unpacked ) == 'pcapng.block.SectionHeaderBlock'
-    print( '710', shb_obj )
-    print( '711', shb_obj_unpacked )
+    print(( '710', shb_obj ))
+    print(( '711', shb_obj_unpacked ))
     assert shb_obj == shb_obj_unpacked
 
 def test_interface_desc_block():
@@ -91,7 +91,7 @@ def test_enhanced_pkt_block():
     assert_epb_codec( 4, 'Doh!', 23, opts )
     assert_epb_codec( 5, "Don't have a cow, man.", None, opts )
     for i in range(13):
-        assert_epb_codec( 42, range(i), None, opts )
+        assert_epb_codec( 42, list(range(i)), None, opts )
 
     with pytest.raises(AssertionError):
         assert_epb_codec( 5, "Don't have a cow, man.", 7 )
@@ -113,9 +113,9 @@ def test_custom_block_copyable():
         cbnc_obj = block.CustomBlockNonCopyable( pen.BROCADE_PEN, orig, opts )
         cbnc_bytes = cbnc_obj.pack()
         cbnc_obj_unpack = block.CustomBlockNonCopyable.unpack( cbnc_bytes )
-        print
-        print( '770', cbnc_obj)
-        print( '771', cbnc_obj_unpack)
+        print()
+        print(( '770', cbnc_obj))
+        print(( '771', cbnc_obj_unpack))
         assert cbnc_obj_unpack == cbnc_obj
 
     assert_custom_block_codec( '' )
@@ -125,7 +125,7 @@ def test_custom_block_copyable():
     assert_custom_block_codec( 'Doh!' )
     assert_custom_block_codec( 'How do you like me now?' )
     for i in range(23):
-        assert_custom_block_codec( range(i) )
+        assert_custom_block_codec( list(range(i)) )
 
 def test_custom_mrt_isis_block():
     def assert_cmib_codec(content):
@@ -143,7 +143,7 @@ def test_custom_mrt_isis_block():
     assert_cmib_codec( 'Doh!' )
     assert_cmib_codec( 'I Dream of Jeannie' )
     for i in range(13):
-        assert_cmib_codec( range(i) )
+        assert_cmib_codec( list(range(i)) )
 
 #-----------------------------------------------------------------------------
 

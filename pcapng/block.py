@@ -18,8 +18,6 @@ See:  https://pcapng.github.io/pcapng/
 
 #todo add header docstring to all
 
-from __future__ import print_function
-
 import struct
 
 import pcapng
@@ -566,7 +564,7 @@ def unpack_dispatch( packed_bytes ):
         #todo exception?
         # raise Exception( 'unpack_dispatch(): unrecognized block blk_type={}'.format(blk_type))
         #
-        print( 'warning - Block.unpack_dispatch(): unrecognized Block={}'.format( blk_type )) #todo log
+        print(( 'warning - Block.unpack_dispatch(): unrecognized Block={}'.format( blk_type ))) #todo log
         return Block( Block.BLOCK_UNKNOWN, packed_bytes )
 
 def pack_all( blk_lst ):
@@ -599,7 +597,7 @@ def unpack_all(packed_bytes):
     blk_segments = segment_all( packed_bytes )
     for blk_bytes in blk_segments:
         new_blk = unpack_dispatch( blk_bytes )
-        print( '411  new_blk=', new_blk)
+        print(( '411  new_blk=', new_blk))
         result.append(new_blk)
     return result
 

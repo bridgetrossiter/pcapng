@@ -21,7 +21,7 @@ import pcapng.util  as util
 from   pcapng.util  import to_bytes
 
 #-----------------------------------------------------------------------------
-util.assert_python2()    #todo make work for python 2.7 or 3.3 ?
+     #todo make work for python 2.7 or 3.3 ?
 #-----------------------------------------------------------------------------
 
 

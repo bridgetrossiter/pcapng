@@ -27,7 +27,7 @@ from   pcapng.util      import to_bytes
 #todo look at "docopt" usage -> cmdopts processing
 
 #-----------------------------------------------------------------------------
-util.assert_python2()    #todo make work for python 2.7 or 3.3 ?
+     #todo make work for python 2.7 or 3.3 ?
 #-----------------------------------------------------------------------------
 #todo check type on all fns
 #todo verify have tests for all
